@@ -1,0 +1,22 @@
+[{
+  "fileName": "Документ, удостоверяющий личность заявителя",
+  "fileDescription": null,
+  "fileRequired": false,
+  "IsMultiDoc": false,
+  "MimeTypes": null,
+  "id": "WorkDocument_4400000000160705383"
+},{
+  "fileName": "Документ, подтверждающий полномочия представителя",
+  "fileDescription": "",
+  "fileRequired": false,
+  "IsMultiDoc": false,
+  "MimeTypes": null,
+  "id": "6f4e64ab031c48c486b76841a0b7d21b"
+},{
+  "fileName": "Документ, удостоверяющий личность представителя заявителя",
+  "fileDescription": null,
+  "fileRequired": false,
+  "IsMultiDoc": false,
+  "MimeTypes": null,
+  "id": "3ac940749cf7462580f4fb90ba459b5e"
+},]
