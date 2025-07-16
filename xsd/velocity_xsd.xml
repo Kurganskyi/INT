@@ -7,7 +7,7 @@
 >
 	<МЗАЗ>
 		<ТОСФР>
-			<УТ7:Код>${form0.pfr.code}</УТ7:Код>
+			<УТ7:Код>${form0.pfr.ut7_code}</УТ7:Код>
 			<УТ7:Наименование>${form0.pfr.namePFR_txt}</УТ7:Наименование>
 		</ТОСФР>
 		<Заявитель>
@@ -17,7 +17,18 @@
 				<УТ7:Отчество>${form0.InfoPanel.Ot_Applicant}</УТ7:Отчество>
 			</УТ7:ФИО>
 			<МСК8:СтатусПоМСК>
-				<МСК8:Код>#if (${form0.InfoPanel.stat}=="Мать")1#{elseif ${form0.InfoPanel.stat}=="Отец"}2#{elseif ${form0.InfoPanel.stat}=="Ребенок"}3#{elseif ${form0.InfoPanel.stat}=="Мужчина - единственный усыновитель"}4#{else}0#end</МСК8:Код>
+				<МСК8:Код>
+					#if (${form0.InfoPanel.stat}=="Мать")1
+					#elseif (${form0.InfoPanel.stat}=="Отец")2
+					#elseif (${form0.InfoPanel.stat}=="Ребенок")3
+					#elseif (${form0.InfoPanel.stat}=="Мужчина - единственный усыновитель")4
+					#elseif (${form0.InfoPanel.stat}=="Мужчина, воспитывающий детей")5
+					#elseif (${form0.InfoPanel.stat}=="Мужчина - единственный родитель")6
+					#elseif (${form0.InfoPanel.stat}=="Женщина - супруга мужчины, усыновившая ребенка (детей)")7
+					#else
+					0
+					#end
+				</МСК8:Код>
 				<УТ7:Наименование>${form0.InfoPanel.stat}</УТ7:Наименование>
 			</МСК8:СтатусПоМСК>
 			<УТ7:ДатаРождения>${form0.InfoPanel.date_birth.ToString("yyyy-MM-dd")}</УТ7:ДатаРождения>

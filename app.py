@@ -106,6 +106,20 @@ HTML_TEMPLATE = '''
             .container { padding: 0 4px; }
             .script-block { padding: 14px 6px 10px 6px; }
         }
+        .notify {
+            background: #eafbe7;
+            color: #1a7f37;
+            border: 1px solid #b7e4c7;
+            border-radius: 8px;
+            padding: 12px 18px;
+            margin-bottom: 18px;
+            font-size: 1.1rem;
+        }
+        .notify.error {
+            background: #fff3f3;
+            color: #b30000;
+            border: 1px solid #ffb3b3;
+        }
     </style>
 </head>
 <body>
@@ -114,6 +128,9 @@ HTML_TEMPLATE = '''
         <div style="color:#5181B8; font-size:1.1rem; margin-top:8px;">Запускайте и тестируйте ваши утилиты прямо из браузера</div>
     </header>
     <div class="container">
+    {% if notify %}
+      <div class="notify {{notify_type}}">{{notify}}</div>
+    {% endif %}
     {% for script in scripts %}
     <form class="script-block" method="post" action="/run/{{script}}" enctype="multipart/form-data">
         <h2>{{script}}</h2>
@@ -125,6 +142,26 @@ HTML_TEMPLATE = '''
         {% endif %}
     </form>
     {% endfor %}
+    <!-- Окно для validate_result.py -->
+    <form class="script-block" method="post" action="/validate_result" enctype="multipart/form-data">
+        <h2>Валидация XML по XSD (validate_result.py)</h2>
+        <label>Выберите XSD-схему (из папки valid/):</label><br>
+        <select name="xsd_file">
+            {% for xsd in xsd_files %}
+            <option value="{{xsd}}">{{xsd}}</option>
+            {% endfor %}
+        </select><br><br>
+        <label>Выберите XML-файл для проверки (из папки xsd/):</label><br>
+        <select name="xml_file">
+            {% for xml in xml_files %}
+            <option value="{{xml}}">{{xml}}</option>
+            {% endfor %}
+        </select><br><br>
+        <button type="submit">Проверить</button>
+        {% if validate_output %}
+        <div class="output">{{validate_output}}</div>
+        {% endif %}
+    </form>
     </div>
     <footer>
         &copy; {{2024}} VKUI Python Utility Launcher
@@ -136,7 +173,10 @@ HTML_TEMPLATE = '''
 @app.route('/', methods=['GET', 'POST'])
 def index():
     results = {}
-    return render_template_string(HTML_TEMPLATE, scripts=SCRIPTS, results=results)
+    # Для формы валидации:
+    xsd_files = [f for f in os.listdir('valid') if f.endswith('.xsd')]
+    xml_files = [f for f in os.listdir('xsd') if f.endswith('.xml') or f.endswith('.txt')]
+    return render_template_string(HTML_TEMPLATE, scripts=SCRIPTS, results=results, xsd_files=xsd_files, xml_files=xml_files, validate_output=None, notify=None, notify_type=None)
 
 @app.route('/run/<script>', methods=['POST'])
 def run_script(script):
@@ -159,7 +199,53 @@ def run_script(script):
         if os.path.exists(fname):
             os.remove(fname)
     results = {script: output}
-    return render_template_string(HTML_TEMPLATE, scripts=SCRIPTS, results=results)
+    # Для формы валидации:
+    xsd_files = [f for f in os.listdir('valid') if f.endswith('.xsd')]
+    xml_files = [f for f in os.listdir('xsd') if f.endswith('.xml') or f.endswith('.txt')]
+    return render_template_string(HTML_TEMPLATE, scripts=SCRIPTS, results=results, xsd_files=xsd_files, xml_files=xml_files, validate_output=None, notify=None, notify_type=None)
+
+@app.route('/validate_result', methods=['POST'])
+def validate_result():
+    xsd_file = request.form.get('xsd_file')
+    xml_file = request.form.get('xml_file')
+    # Проверка на пустой выбор
+    if not xsd_file or not xml_file:
+        notify = 'Пожалуйста, выберите XSD-схему и XML-файл.'
+        notify_type = 'error'
+        validate_output = None
+        xsd_files = [f for f in os.listdir('valid') if f.endswith('.xsd')]
+        xml_files = [f for f in os.listdir('xsd') if f.endswith('.xml') or f.endswith('.txt')]
+        return render_template_string(HTML_TEMPLATE, scripts=SCRIPTS, results={}, xsd_files=xsd_files, xml_files=xml_files, validate_output=validate_output, notify=notify, notify_type=notify_type)
+    # Копируем выбранные файлы в нужные места для validate_result.py
+    import shutil
+    temp_xml = os.path.join('xsd', 'Результат.txt')
+    temp_xsd = os.path.join('valid', xsd_file)
+    orig_xml = os.path.join('xsd', xml_file)
+    shutil.copyfile(orig_xml, temp_xml)
+    cmd = ['python', os.path.join('xsd', 'validate_result.py')]
+    try:
+        result = subprocess.run(cmd, capture_output=True, text=True, timeout=120)
+        output = result.stdout + '\n' + result.stderr
+        errors_path = os.path.join('xsd', 'validation_errors.txt')
+        notify = None
+        notify_type = None
+        validate_output = None
+        if 'XML валиден по XSD!' in output:
+            notify = 'Файл успешно провалидирован!'
+            notify_type = ''
+        else:
+            notify = 'Требуется внести правки. Ошибки сохранены в xsd/validation_errors.txt.'
+            notify_type = 'error'
+            if os.path.exists(errors_path):
+                with open(errors_path, encoding='utf-8') as f:
+                    validate_output = f.read()[:2000]
+    except Exception as e:
+        notify = f'Ошибка запуска: {e}'
+        notify_type = 'error'
+        validate_output = None
+    xsd_files = [f for f in os.listdir('valid') if f.endswith('.xsd')]
+    xml_files = [f for f in os.listdir('xsd') if f.endswith('.xml') or f.endswith('.txt')]
+    return render_template_string(HTML_TEMPLATE, scripts=SCRIPTS, results={}, xsd_files=xsd_files, xml_files=xml_files, validate_output=validate_output, notify=notify, notify_type=notify_type)
 
 if __name__ == '__main__':
     app.run(debug=True, host='127.0.0.1', port=5050) 
