@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns0:Response xmlns:ns0="urn://iis.ecp.ru/mzov/1.0.0" xmlns:iis="urn://iis.ecp.ru/mzov/types/1.0.0" xmlns:xsi="urn://www.w3.org/2001/XMLSchema-instance">
+  <iis:ExternalRegistrationNumber>МФЦ-123</iis:ExternalRegistrationNumber>
+  <iis:ProcessingStatusCode>1</iis:ProcessingStatusCode>
+  <iis:ProcessingStatusComment>Заявление зарегистрировано в CФР и направлено на обработку</iis:ProcessingStatusComment>
+</ns0:Response>

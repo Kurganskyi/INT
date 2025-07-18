@@ -1,0 +1,11 @@
+#set($f="False")
+<document>
+	<num_talon>#if (${form0.num_talon})${form0.num_talon}#end</num_talon>
+	<take_talon>#if (${form0.take_talon})${form0.take_talon}#end</take_talon>
+	<num_okno>#if (${form0.num_okno})${form0.num_okno}#end</num_okno>
+	<call_talon>#if (${form0.call_talon})${form0.call_talon}#end</call_talon>
+	<Element_9>#if (${form0.Element_9})${form0.Element_9}#end</Element_9>
+	<date_talon>#if (${form0.date_talon})${form0.date_talon}#end</date_talon>
+	<start_talon>#if (${form0.start_talon})${form0.start_talon}#end</start_talon>
+	<time_diff>#if (${form0.time_diff})${form0.time_diff}#end</time_diff>
+</document>

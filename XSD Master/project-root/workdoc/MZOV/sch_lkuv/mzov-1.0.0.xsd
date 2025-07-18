@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:iis="urn://iis.ecp.ru/mzov/types/1.0.0" xmlns="urn://iis.ecp.ru/mzov/1.0.0" targetNamespace="urn://iis.ecp.ru/mzov/1.0.0" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="urn://iis.ecp.ru/mzov/types/1.0.0" schemaLocation="commons/mzov-types-1.0.0.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="ru">
+			Приём заявления об отказе от получения ежемесячной выплаты до достижения ребенком возраста трех лет из средств материнского (семейного) капитала (МЗОВ)
+		</xs:documentation>
+	</xs:annotation>
+	<xs:element name="Request">
+		<xs:annotation>
+			<xs:documentation xml:lang="ru">
+        Сообщение-запрос
+      </xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="iis:ApplicationRequestType">
+					<xs:sequence>
+						<xs:element name="FRGUTargetId" type="iis:string-20">
+							<xs:annotation>
+								<xs:documentation xml:lang="ru">
+									Идентификатор цели оказания госуслуги по ФРГУ, в рамках которой идёт обращение к виду сведений
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="Documents" type="iis:AttachmentsDataType" minOccurs="0"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Response" type="iis:ApplicationResponseType">
+		<xs:annotation>
+			<xs:documentation xml:lang="ru">
+        Сообщение-ответ
+      </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+</xs:schema>

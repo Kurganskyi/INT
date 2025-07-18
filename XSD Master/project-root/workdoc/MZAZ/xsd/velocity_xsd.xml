@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ЭДСФР
+  xmlns="http://пф.рф/ВВ/МСК/МЗОВ/2024-01-01"
+  xmlns:АФ7="http://пф.рф/АФ/2023-04-03"
+  xmlns:УТ7="http://пф.рф/УТ/2023-04-03"
+  xmlns:ПР8="http://пф.рф/Представитель/2024-01-01"
+  xmlns:ns1="http://www.w3.org/2000/09/xmldsig#"
+  xmlns:sig="http://iis.ecp.ru/SignInfo/2023-01-10"
+>
+  <МЗОВ>
+    <ТОСФР>
+      <УТ7:Код>${form0.pfr.ut7_code}</УТ7:Код>
+      <УТ7:Наименование>${form0.pfr.namePFR_txt}</УТ7:Наименование>
+    </ТОСФР>
+    <Заявитель>
+      <УТ7:ФИО>
+        <УТ7:Фамилия>${form0.InfoPanel.F_Applicant}</УТ7:Фамилия>
+        <УТ7:Имя>${form0.InfoPanel.I_Applicant}</УТ7:Имя>
+        <УТ7:Отчество>${form0.InfoPanel.Ot_Applicant}</УТ7:Отчество>
+      </УТ7:ФИО>
+      <УТ7:СНИЛС>${form0.InfoPanel.snils}</УТ7:СНИЛС>
+      <УТ7:УдостоверяющийДокумент>
+        <УТ7:Код>
+          #if (${form0.PasData.code_txt}=="Паспорт гражданина РФ")27
+          #elseif (${form0.PasData.code_txt}=="Свидетельство о рождении гражданина РФ")3
+          #else
+          0
+          #end
+        </УТ7:Код>
+        <УТ7:Серия>${form0.PasData.Seria}</УТ7:Серия>
+        <УТ7:Номер>${form0.PasData.Number}</УТ7:Номер>
+        <УТ7:ДатаВыдачи>${form0.PasData.DatePas.ToString("yyyy-MM-dd")}</УТ7:ДатаВыдачи>
+        <УТ7:КемВыдан>${form0.PasData.PassBy}</УТ7:КемВыдан>
+      </УТ7:УдостоверяющийДокумент>
+      <УТ7:ДатаРождения>${form0.InfoPanel.date_birth.ToString("yyyy-MM-dd")}</УТ7:ДатаРождения>
+      <УТ7:Телефон>${form0.InfoPanel.phone}</УТ7:Телефон>
+      #if(${form0.InfoPanel.email})
+        <УТ7:АдресЭлПочты>${form0.InfoPanel.email}</УТ7:АдресЭлПочты>
+      #end
+    </Заявитель>
+    <СертифицируемыйРебенок>
+      <УТ7:ФИО>
+        <УТ7:Фамилия>${form0.child.F}</УТ7:Фамилия>
+        <УТ7:Имя>${form0.child.I}</УТ7:Имя>
+        <УТ7:Отчество>${form0.child.Ot}</УТ7:Отчество>
+      </УТ7:ФИО>
+      <УТ7:СНИЛС>${form0.child.snils}</УТ7:СНИЛС>
+      <УТ7:ДатаРождения>${form0.child.date_birth.ToString("yyyy-MM-dd")}</УТ7:ДатаРождения>
+    </СертифицируемыйРебенок>
+    #if(${form0.representative})
+      <Представитель>
+        <ПР8:ТипПредставитель_ЮЛ_ФЛ>${form0.representative}</ПР8:ТипПредставитель_ЮЛ_ФЛ>
+      </Представитель>
+    #end
+    <ДатаЗаполнения>${form0.pfr.date_z.ToString("yyyy-MM-dd")}</ДатаЗаполнения>
+  </МЗОВ>
+  #if(${form0.service_info})
+    <СлужебнаяИнформация>
+      <АФ7:ТипСлужебнаяИнформация>${form0.service_info}</АФ7:ТипСлужебнаяИнформация>
+    </СлужебнаяИнформация>
+  #end
+  #if(${form0.signature})
+    <ns1:Signature>${form0.signature}</ns1:Signature>
+  #end
+  #if(${form0.signinfo})
+    <sig:SignInfo>${form0.signinfo}</sig:SignInfo>
+  #end
+</ЭДСФР>         

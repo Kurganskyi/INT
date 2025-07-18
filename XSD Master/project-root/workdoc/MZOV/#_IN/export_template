@@ -1,0 +1,43 @@
+[{
+  "RecID": "3b0e42d6-23c8-4203-af44-2d05a2569dcf",
+  "Title": "МЗОВ_44",
+  "FileTitle": null,
+  "Description": null,
+  "AvailableAtWizzard": false,
+  "Components": [
+    {
+      "Attributes": {
+        "Nvx.ReDoc.Workflow.Engine.DataModel.WorkflowTemplate, Nvx.ReDoc.Workflow.Engine": {
+          "inherit": true,
+          "values": [
+            {
+              "Nvx.ReDoc.Workflow.Engine.DataModel.WorkflowTemplate, Nvx.ReDoc.Workflow.Engine": {
+                "WorkflowProcess": {
+                  "Raw": "null"
+                },
+                "WorkflowTemplateId": "Оказание услуги::Кострома СФР. Новая услуга (МЗОВ). АС. ",
+                "WorkflowTemplateRecId": "2a214c3b-481b-4c96-9534-5e3671c6d4ce"
+              }
+            }
+          ]
+        }
+      },
+      "RecId": "2965e403-8c8d-4305-bbb5-c2480c5c2cb3",
+      "TypeId": "Nvx.ReDoc.Workflow.Engine.ProcessFileComponent"
+    }
+  ],
+  "Classifiers": [],
+  "UserInfoIds": null,
+  "JournalIds": null,
+  "FileTemplateType": 0,
+  "DynamicFormRecId": null,
+  "HaveInteragency": false,
+  "AdapterNames": null,
+  "ServiceCode": null,
+  "DifficultyLevelForTasks": 2,
+  "SmevRequestType": null,
+  "VsName": null,
+  "VsUri": null,
+  "VsOwner": null,
+  "VisibleInRegistry": false
+},]

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema 
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://пф.рф/ВВ/МСК/МЗОВ/2024-01-01"
+    xmlns:АФ7="http://пф.рф/АФ/2023-04-03"
+    xmlns:УТ7="http://пф.рф/УТ/2023-04-03"
+    xmlns:ПР8="http://пф.рф/Представитель/2024-01-01"
+    xmlns:ns1="http://www.w3.org/2000/09/xmldsig#"
+    xmlns:sig="http://iis.ecp.ru/SignInfo/2023-01-10"
+    targetNamespace="http://пф.рф/ВВ/МСК/МЗОВ/2024-01-01"
+    elementFormDefault="qualified"
+    version="2.0">
+
+    <xs:import namespace="http://пф.рф/УТ/2023-04-03" schemaLocation="UnifTypes_2023-04-03.xsd"/>
+    <xs:import namespace="http://пф.рф/АФ/2023-04-03" schemaLocation="TypesAF_2023-04-03.xsd"/>
+    <xs:import namespace="http://пф.рф/Представитель/2024-01-01" schemaLocation="TypePredstv_2024-01-01.xsd"/>
+    <xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig_core_schema.xsd"/>
+    <xs:import namespace="http://iis.ecp.ru/SignInfo/2023-01-10" schemaLocation="SignInfo_2023-01-10.xsd"/>
+    <xs:annotation>
+		<xs:documentation>Формат Документа «Заявление об отказе от получения ежемесячной выплаты в связи с рождением (усыновлением) ребенка до достижения им возраста трех лет из средств материнского (семейного) капитала»</xs:documentation>
+	</xs:annotation>
+	<xs:element name="ЭДСФР">
+		<xs:annotation>
+			<xs:documentation>Корневой элемент. Электронный документ «Заявление об отказе от получения ежемесячной выплаты в связи с рождением (усыновлением) ребенка до достижения им возраста трех лет из средств материнского (семейного) капитала». Содержит сведения самого документа и служебную информацию об электронном документе.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="МЗОВ">
+					<xs:annotation>
+						<xs:documentation>Документ «Заявление об отказе от получения ежемесячной выплаты в связи с рождением (усыновлением) ребенка до достижения им возраста трех лет из средств материнского (семейного) капитала»</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="ТОСФР" type="УТ7:ТипТОСФР">
+								<xs:annotation>
+									<xs:documentation>Наименование территориального органа Фонда пенсионного и социального страхования Российской Федерации, в который застрахованным лицом (его представителем) подается заявление</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="Заявитель">
+								<xs:annotation>
+									<xs:documentation>Данные заявителя</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="УТ7:ФИО">
+											<xs:annotation>
+												<xs:documentation>ФИО заявителя</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element ref="УТ7:СНИЛС">
+											<xs:annotation>
+												<xs:documentation>Страховой номер индивидуального лицевого счета заявителя</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element ref="УТ7:УдостоверяющийДокумент">
+											<xs:annotation>
+												<xs:documentation>Документ, удостоверяющий личность заявителя</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:group ref="УТ7:ГрДатаРождения">
+											<xs:annotation>
+												<xs:documentation>Дата рождения заявителя</xs:documentation>
+											</xs:annotation>
+										</xs:group>
+										<xs:element ref="УТ7:Телефон">
+											<xs:annotation>
+												<xs:documentation>Перечень контактных номеров телефона</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element ref="УТ7:АдресЭлПочты" minOccurs="0"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="СертифицируемыйРебенок">
+								<xs:annotation>
+									<xs:documentation>Сведения о ребенке, в связи с рождением которого возникло право на получение ежемесячной выплаты</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="УТ7:ФИО">
+											<xs:annotation>
+												<xs:documentation>ФИО ребенка, в связи с рождением которого возникло право на получение ежемесячной выплаты</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element ref="УТ7:СНИЛС">
+											<xs:annotation>
+												<xs:documentation>Страховой номер индивидуального лицевого счета ребенка</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element ref="УТ7:ДатаРождения">
+											<xs:annotation>
+												<xs:documentation>Дата рождения ребенка, в связи с рождением которого возникло право на получение ежемесячной выплаты</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="Представитель" type="ПР8:ТипПредставитель_ЮЛ_ФЛ" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Сведения о законном представителе, заполняются, если заявление подается представителем заявителя</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="ДатаЗаполнения" type="xs:date">
+								<xs:annotation>
+									<xs:documentation>Дата заполнения заявления</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="СлужебнаяИнформация" type="АФ7:ТипСлужебнаяИнформация" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Служебная информация об электронном документе</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="ns1:Signature" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Электронная подпись (ЭП). Электронный документ, для которого законодательством Российской Федерации предусмотрена юридически значимая подпись, должен быть подписан усиленной квалифицированной электронной подписью в соответствии со спецификацией XMLDSig</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="sig:SignInfo" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

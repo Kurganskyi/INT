@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns0:Request xmlns:ns0="urn://iis.ecp.ru/mzov/1.0.0" xmlns:iis="urn://iis.ecp.ru/mzov/types/1.0.0" xmlns:xsi="urn://www.w3.org/2001/XMLSchema-instance">
+  <iis:SNILS>00100326340</iis:SNILS>
+  <iis:ExternalRegistrationData>
+    <iis:ExternalRegistrationNumber>МФЦ-123</iis:ExternalRegistrationNumber>
+    <iis:ExternalRegistrationDate>2020-10-23</iis:ExternalRegistrationDate>
+  </iis:ExternalRegistrationData>
+  <iis:OKATO>94401000000</iis:OKATO>
+  <iis:OKTMO>94701000</iis:OKTMO>
+  <iis:MFCCode>10002639290</iis:MFCCode>
+  <iis:ApplicationFileName>mzov.xml</iis:ApplicationFileName>
+  <ns0:FRGUTargetId>354988974</ns0:FRGUTargetId>
+</ns0:Request>
