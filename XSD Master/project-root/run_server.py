@@ -21,10 +21,10 @@ time.sleep(2)
 
 # Открываем в Chrome (если не найден, откроет в браузере по умолчанию)
 try:
-    chrome_path = None
     if sys.platform.startswith('win'):
         # Попытка найти Chrome на Windows
         import winreg
+        chrome_path = None
         reg_path = r'SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\chrome.exe'
         try:
             with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, reg_path) as key:
@@ -38,18 +38,26 @@ try:
                 chrome_path = r'C:\Program Files (x86)\Google\Chrome\Application\chrome.exe'
             if not os.path.exists(chrome_path):
                 chrome_path = None
+        if chrome_path and os.path.exists(chrome_path):
+            webbrowser.get(f'"{chrome_path}" %s').open(URL)
+        else:
+            webbrowser.open(URL)
     elif sys.platform.startswith('darwin'):
-        chrome_path = 'open -a "/Applications/Google Chrome.app" %s'
+        # macOS: используем команду open для запуска Chrome
+        chrome_app = '/Applications/Google Chrome.app'
+        if os.path.exists(chrome_app):
+            subprocess.run(['open', '-a', 'Google Chrome', URL], check=False)
+        else:
+            webbrowser.open(URL)
     else:
+        # Linux и другие Unix-системы
         chrome_path = '/usr/bin/google-chrome'
         if not os.path.exists(chrome_path):
             chrome_path = '/usr/bin/chromium-browser'
-        if not os.path.exists(chrome_path):
-            chrome_path = None
-    if chrome_path and os.path.exists(chrome_path):
-        webbrowser.get(f'"{chrome_path}" %s').open(URL)
-    else:
-        webbrowser.open(URL)
+        if chrome_path and os.path.exists(chrome_path):
+            webbrowser.get(f'"{chrome_path}" %s').open(URL)
+        else:
+            webbrowser.open(URL)
 except Exception as e:
     print(f'Не удалось открыть Chrome автоматически: {e}')
     print(f'Откройте вручную: {URL}')
